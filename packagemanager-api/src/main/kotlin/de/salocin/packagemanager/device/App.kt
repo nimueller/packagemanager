@@ -13,5 +13,7 @@ interface App {
 
     suspend fun refreshPaths(observer: ProgressObserver? = null)
 
-    suspend fun download(destination: Path, observer: ProgressObserver? = null)
+    suspend fun download(observer: ProgressObserver? = null): AppBundle
+
+    suspend fun downloadAsSingleFile(path: Path, observer: ProgressObserver? = null)
 }

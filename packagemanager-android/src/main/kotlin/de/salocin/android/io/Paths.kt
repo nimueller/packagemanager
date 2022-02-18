@@ -1,5 +1,6 @@
 package de.salocin.android.io
 
+import de.salocin.packagemanager.io.TemporaryDirectory
 import kotlinx.coroutines.*
 import java.io.IOException
 import java.nio.file.Files
@@ -25,13 +26,13 @@ val String.filename: String
         return Regex("^.*/(.+)\$").matchEntire(this)?.groups?.get(1)?.value ?: this
     }
 
-suspend inline fun createTemporaryDirectory(crossinline block: suspend (Path) -> Unit) {
+suspend inline fun createTemporaryDirectory(crossinline block: suspend (TemporaryDirectory) -> Unit) {
     coroutineScope {
         val createDirectoryJob: Deferred<Path> = async(Dispatchers.IO) {
             Files.createTempDirectory(null)
         }
 
-        val directory = createDirectoryJob.await()
+        val directory = TemporaryDirectory(createDirectoryJob.await())
 
         try {
             block(directory)
@@ -40,7 +41,7 @@ suspend inline fun createTemporaryDirectory(crossinline block: suspend (Path) ->
                 delay(500L)
 
                 launch(Dispatchers.IO) {
-                    directory.deleteRecursive()
+                    directory.path.deleteRecursive()
                 }
             }
         }
