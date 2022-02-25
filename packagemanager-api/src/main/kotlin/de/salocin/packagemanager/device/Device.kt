@@ -11,6 +11,8 @@ interface Device {
 
     val apps: List<App>
 
+    suspend fun refreshRootPaths(observer: ProgressObserver? = null): List<DevicePath<Device>>
+
     suspend fun refreshApps(observer: ProgressObserver? = null)
 
     suspend fun installApp(path: Path, observer: ProgressObserver? = null)

@@ -2,17 +2,14 @@ package de.salocin.android.device
 
 import de.salocin.packagemanager.ProgressObserver
 import de.salocin.packagemanager.configuration.Configuration
-import de.salocin.packagemanager.device.App
-import de.salocin.packagemanager.device.AppBundle
-import de.salocin.packagemanager.device.AppType
-import de.salocin.packagemanager.device.DevicePath
+import de.salocin.packagemanager.device.*
 import java.nio.file.Path
 
 class FakeAndroidApp(override val name: String) : App {
 
     override val type: AppType = AndroidAppType.FAKE
 
-    override val paths: List<DevicePath> = emptyList()
+    override val paths: List<DevicePath<Device>> = emptyList()
 
     override suspend fun refreshPaths(observer: ProgressObserver?) {
         // nothing to do

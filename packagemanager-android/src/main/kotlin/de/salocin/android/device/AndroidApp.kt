@@ -8,7 +8,6 @@ import de.salocin.android.io.zip
 import de.salocin.packagemanager.ProgressObserver
 import de.salocin.packagemanager.configuration.Configuration
 import de.salocin.packagemanager.device.App
-import de.salocin.packagemanager.device.DevicePath
 import de.salocin.packagemanager.io.TemporaryDirectory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -24,7 +23,7 @@ data class AndroidApp(
     override val type: AndroidAppType
 ) : App {
 
-    override var paths: List<DevicePath> = emptyList()
+    override var paths: List<AndroidDevicePath> = emptyList()
         private set
 
     override suspend fun refreshPaths(observer: ProgressObserver?) {
@@ -59,7 +58,7 @@ data class AndroidApp(
 
     private suspend fun downloadSingleApk(
         observer: ProgressObserver?,
-        devicePath: DevicePath,
+        devicePath: AndroidDevicePath,
         temporaryDirectory: TemporaryDirectory,
         index: Int
     ): Path {

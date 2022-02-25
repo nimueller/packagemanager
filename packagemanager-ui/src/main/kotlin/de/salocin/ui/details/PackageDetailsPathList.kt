@@ -1,5 +1,6 @@
 package de.salocin.ui.details
 
+import de.salocin.packagemanager.device.Device
 import de.salocin.packagemanager.device.DevicePath
 import de.salocin.ui.View
 import de.salocin.ui.fontawesome.FA_COPY
@@ -21,9 +22,9 @@ import javafx.util.Callback
 class PackageDetailsPathList(label: String) : View {
 
     private val listLabel = Text(label)
-    private val listView = ListView<DevicePath>().apply {
+    private val listView = ListView<DevicePath<Device>>().apply {
         cellFactory = Callback {
-            val cell = ListCell<DevicePath>()
+            val cell = ListCell<DevicePath<Device>>()
             val contextMenu = ContextMenu()
             contextMenu.items.add(fontAwesomeMenuItem("Copy Path", FA_COPY) {
                 onAction = EventHandler {
@@ -41,7 +42,7 @@ class PackageDetailsPathList(label: String) : View {
         }
     }
 
-    var items: ObservableList<DevicePath> by listView.itemsProperty()
+    var items: ObservableList<DevicePath<Device>> by listView.itemsProperty()
 
     override val root = VBox(listLabel, listView)
 }

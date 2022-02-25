@@ -9,7 +9,7 @@ interface App {
 
     val type: AppType
 
-    val paths: List<DevicePath>
+    val paths: List<DevicePath<Device>>
 
     suspend fun refreshPaths(observer: ProgressObserver? = null)
 

@@ -10,6 +10,12 @@ data class AndroidDevice(override val model: String, override val serialNumber: 
     override var apps: List<AndroidApp> = emptyList()
         private set
 
+    private val rootPaths: List<AndroidDevicePath> = listOf(AndroidDevicePath(this, "."))
+
+    override suspend fun refreshRootPaths(observer: ProgressObserver?): List<AndroidDevicePath> {
+        return rootPaths
+    }
+
     override suspend fun refreshApps(observer: ProgressObserver?) {
         apps = Adb.packages(this)
     }

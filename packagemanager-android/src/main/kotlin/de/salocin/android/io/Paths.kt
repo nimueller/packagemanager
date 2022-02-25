@@ -23,7 +23,7 @@ fun Path.deleteRecursive() {
 
 val String.filename: String
     get() {
-        return Regex("^.*/(.+)\$").matchEntire(this)?.groups?.get(1)?.value ?: this
+        return Regex("^.*/(.+)$").matchEntire(this)?.groups?.get(1)?.value ?: this
     }
 
 suspend inline fun createTemporaryDirectory(crossinline block: suspend (TemporaryDirectory) -> Unit) {

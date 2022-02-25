@@ -1,9 +1,10 @@
 package de.salocin.packagemanager.device
 
-@JvmInline
-value class DevicePath(val path: String) {
+interface DevicePath<out D : Device> {
 
-    override fun toString(): String {
-        return path
-    }
+    val device: D
+
+    val path: String
+
+    suspend fun list(): List<DevicePath<D>>
 }

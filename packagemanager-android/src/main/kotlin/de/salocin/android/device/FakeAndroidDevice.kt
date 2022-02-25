@@ -2,6 +2,7 @@ package de.salocin.android.device
 
 import de.salocin.packagemanager.ProgressObserver
 import de.salocin.packagemanager.device.Device
+import de.salocin.packagemanager.device.DevicePath
 import java.nio.file.Path
 
 data class FakeAndroidDevice(
@@ -10,6 +11,12 @@ data class FakeAndroidDevice(
 ) : Device {
 
     override val apps: List<FakeAndroidApp> = emptyList()
+
+    private val rootPaths: List<DevicePath<Device>> = emptyList()
+
+    override suspend fun refreshRootPaths(observer: ProgressObserver?): List<DevicePath<Device>> {
+        return rootPaths
+    }
 
     override suspend fun refreshApps(observer: ProgressObserver?) {
         // nothing to do

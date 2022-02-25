@@ -3,7 +3,9 @@ package de.salocin.android.adb
 import de.salocin.android.device.AndroidApp
 import de.salocin.android.device.AndroidAppType
 import de.salocin.android.device.AndroidDevice
+import de.salocin.android.device.AndroidDevicePath
 import de.salocin.packagemanager.device.DevicePath
+import de.salocin.packagemanager.io.OutputParser
 import de.salocin.packagemanager.io.RegexOutputParser
 import java.nio.file.Path
 
@@ -19,7 +21,7 @@ object Adb {
         return process.execute()
     }
 
-    suspend fun pull(device: AndroidDevice, devicePath: DevicePath, target: Path) {
+    suspend fun pull(device: AndroidDevice, devicePath: DevicePath<AndroidDevice>, target: Path) {
         val process = AdbProcess.build(device, listOf("pull", "-a", devicePath.path, target.toString()))
         process.execute()
     }
@@ -50,9 +52,16 @@ object Adb {
         }
     }
 
-    suspend fun packagePaths(device: AndroidDevice, name: String): List<DevicePath> {
-        val parser = RegexOutputParser(stripPackagePrefixRegex).takeGroup(1).mapEachMatchTo { DevicePath(it) }
+    suspend fun packagePaths(device: AndroidDevice, name: String): List<AndroidDevicePath> {
+        val parser = RegexOutputParser(stripPackagePrefixRegex).takeGroup(1).mapEachMatchTo {
+            AndroidDevicePath(device, it)
+        }
         val process = AdbProcess.build(device, listOf("shell", "pm", "path", name), parser)
+        return process.execute()
+    }
+
+    suspend fun <T> shell(device: AndroidDevice, parser: OutputParser<T>, vararg command: String): List<T> {
+        val process = AdbProcess.build(device, listOf("shell", *command), parser)
         return process.execute()
     }
 }
