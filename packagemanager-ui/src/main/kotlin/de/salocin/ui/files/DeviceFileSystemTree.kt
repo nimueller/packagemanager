@@ -1,10 +1,10 @@
 package de.salocin.ui.files
 
-import de.salocin.android.device.FakeAndroidDevice
-import de.salocin.android.device.FakeDevicePath
 import de.salocin.android.io.filename
 import de.salocin.packagemanager.device.Device
 import de.salocin.packagemanager.device.DevicePath
+import de.salocin.packagemanager.fake.FakeAndroidDevice
+import de.salocin.packagemanager.fake.FakeDevicePath
 import de.salocin.ui.ApplicationView
 import de.salocin.ui.PackageManagerApplication
 import de.salocin.ui.mapTo

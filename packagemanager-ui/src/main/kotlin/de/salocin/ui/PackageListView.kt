@@ -1,9 +1,9 @@
 package de.salocin.ui
 
 import de.salocin.android.device.AndroidAppType
-import de.salocin.android.device.FakeAndroidApp
 import de.salocin.packagemanager.device.App
 import de.salocin.packagemanager.device.Device
+import de.salocin.packagemanager.fake.FakeAndroidApp
 import javafx.beans.value.ObservableValue
 import javafx.scene.control.ProgressIndicator
 import javafx.scene.control.TreeItem

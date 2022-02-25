@@ -7,6 +7,5 @@ enum class AndroidAppType : AppType {
     DATA,
     SYSTEM,
     VENDOR,
-    UNKNOWN,
-    FAKE
+    UNKNOWN
 }

@@ -1,8 +1,8 @@
 package de.salocin.ui
 
 import de.salocin.android.device.AndroidDeviceHolder
-import de.salocin.android.device.FakeAndroidDevice
 import de.salocin.packagemanager.device.Device
+import de.salocin.packagemanager.fake.FakeAndroidDevice
 import de.salocin.ui.dialog.CancelableProgressDialog
 import de.salocin.ui.dialog.ProgressDialog
 import de.salocin.ui.fontawesome.FA_SYNC

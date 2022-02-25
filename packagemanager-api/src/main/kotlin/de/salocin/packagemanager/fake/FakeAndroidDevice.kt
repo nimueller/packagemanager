@@ -1,4 +1,4 @@
-package de.salocin.android.device
+package de.salocin.packagemanager.fake
 
 import de.salocin.packagemanager.ProgressObserver
 import de.salocin.packagemanager.device.Device

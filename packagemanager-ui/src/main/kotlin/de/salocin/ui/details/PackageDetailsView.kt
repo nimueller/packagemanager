@@ -1,7 +1,7 @@
 package de.salocin.ui.details
 
-import de.salocin.android.device.AndroidAppType
 import de.salocin.packagemanager.device.App
+import de.salocin.packagemanager.fake.FakeAppType
 import de.salocin.ui.ApplicationView
 import de.salocin.ui.PackageManagerApplication
 import de.salocin.ui.observableList
@@ -40,7 +40,7 @@ class PackageDetailsView(
             content.isVisible = false
             contentLoader.isVisible = false
 
-            if (newValue == null || newValue.type == AndroidAppType.FAKE) {
+            if ((newValue == null) || (newValue.type == FakeAppType)) {
                 contentNoDetails.isVisible = true
             } else {
                 contentNoDetails.isVisible = false
