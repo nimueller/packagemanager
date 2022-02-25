@@ -6,5 +6,7 @@ interface DevicePath<out D : Device> {
 
     val path: String
 
+    val type: FileType
+
     suspend fun list(): List<DevicePath<D>>
 }

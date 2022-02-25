@@ -5,6 +5,7 @@ import de.salocin.android.device.AndroidAppType
 import de.salocin.android.device.AndroidDevice
 import de.salocin.android.device.AndroidDevicePath
 import de.salocin.packagemanager.device.DevicePath
+import de.salocin.packagemanager.device.FileType
 import de.salocin.packagemanager.io.OutputParser
 import de.salocin.packagemanager.io.RegexOutputParser
 import java.nio.file.Path
@@ -54,7 +55,7 @@ object Adb {
 
     suspend fun packagePaths(device: AndroidDevice, name: String): List<AndroidDevicePath> {
         val parser = RegexOutputParser(stripPackagePrefixRegex).takeGroup(1).mapEachMatchTo {
-            AndroidDevicePath(device, it)
+            AndroidDevicePath(device, it, FileType.Regular)
         }
         val process = AdbProcess.build(device, listOf("shell", "pm", "path", name), parser)
         return process.execute()

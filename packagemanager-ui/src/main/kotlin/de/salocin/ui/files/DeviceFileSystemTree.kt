@@ -60,7 +60,6 @@ class DeviceFileSystemTree(
                 }
             }
 
-
             rootItem.value = FakeDevicePath(FakeAndroidDevice(device.serialNumber, device.model), device.model)
             root.root = rootItem
         }
@@ -81,19 +80,22 @@ class DeviceFileSystemTree(
     private fun DevicePath<Device>.buildTreeItem(parent: TreeItem<DevicePath<Device>>?): TreeItem<DevicePath<Device>> {
         val item = TreeItem(this)
 
-        item.expandedProperty().addListener { _, _, newValue ->
-            if (newValue) {
-                app.launch {
-                    item.children.clear()
-                    item.children.add(placeholderItem)
-                    val children = list()
-                    item.children.clear()
-                    item.children.addAll(children.map { it.buildTreeItem(item) })
+        if (type.isDirectory) {
+            item.expandedProperty().addListener { _, _, newValue ->
+                if (newValue) {
+                    app.launch {
+                        item.children.clear()
+                        item.children.add(placeholderItem)
+                        val children = list()
+                        item.children.clear()
+                        item.children.addAll(children.map { it.buildTreeItem(item) })
+                    }
                 }
             }
-        }
 
-        item.children.add(placeholderItem)
+            item.children.add(placeholderItem)
+        }
+        
         parent?.children?.add(item)
         return item
     }
