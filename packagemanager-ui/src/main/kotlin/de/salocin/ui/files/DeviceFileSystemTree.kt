@@ -1,6 +1,5 @@
 package de.salocin.ui.files
 
-import de.salocin.android.io.filename
 import de.salocin.packagemanager.device.Device
 import de.salocin.packagemanager.device.DevicePath
 import de.salocin.packagemanager.fake.FakeAndroidDevice
@@ -8,12 +7,10 @@ import de.salocin.packagemanager.fake.FakeDevicePath
 import de.salocin.ui.ApplicationView
 import de.salocin.ui.PackageManagerApplication
 import de.salocin.ui.mapTo
-import de.salocin.ui.observable
+import de.salocin.ui.util.column
 import javafx.beans.value.ObservableValue
 import javafx.scene.control.*
-import javafx.util.Callback
 import kotlinx.coroutines.launch
-import kotlin.reflect.KProperty1
 
 class DeviceFileSystemTree(
     app: PackageManagerApplication,
@@ -25,7 +22,7 @@ class DeviceFileSystemTree(
     }
 
     override val root = TreeTableView<DevicePath<Device>>().apply {
-        column("Name", DevicePath<Device>::path) { path -> path.filename }
+        column("Name", DevicePath<Device>::path, ::DeviceFileSystemTreeTableCell)
         columnResizePolicy = TreeTableView.CONSTRAINED_RESIZE_POLICY
         placeholder = ProgressIndicator()
     }
@@ -65,18 +62,6 @@ class DeviceFileSystemTree(
         }
     }
 
-    private fun <T : Any?> TreeTableView<DevicePath<Device>>.column(
-        title: String,
-        prop: KProperty1<DevicePath<Device>, T>,
-        converter: (T) -> T = { it }
-    ) {
-        val column = TreeTableColumn<DevicePath<Device>, T>(title)
-        column.cellValueFactory = Callback {
-            converter(prop.get(it.value.value)).observable()
-        }
-        columns.add(column)
-    }
-
     private fun DevicePath<Device>.buildTreeItem(parent: TreeItem<DevicePath<Device>>?): TreeItem<DevicePath<Device>> {
         val item = TreeItem(this)
 
@@ -95,7 +80,7 @@ class DeviceFileSystemTree(
 
             item.children.add(placeholderItem)
         }
-        
+
         parent?.children?.add(item)
         return item
     }
